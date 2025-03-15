@@ -9,13 +9,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] float cameraSpeed = 3f;
     [SerializeField] Camera mainCamera;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-   
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
@@ -39,6 +32,7 @@ public class CameraController : MonoBehaviour
             .SetEase(Ease.OutBounce);
         }
     }
+
     private Vector3 SnappedVector()
     {
         var endValue = 0.0f;
