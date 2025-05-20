@@ -12,19 +12,23 @@ public class CameraController : MonoBehaviour
     [SerializeField] CinemachineCamera ISOCam;
     [SerializeField] CinemachineCamera TPCam;
 
+     [SerializeField] GameObject PlayerFP;
+     [SerializeField] GameObject PlayerISO;
+     [SerializeField] GameObject PlayerTP;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SwitchCamera(FPCam);
+            SwitchCamera(FPCam, PlayerFP);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            SwitchCamera(ISOCam);
+            SwitchCamera(ISOCam, PlayerISO);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            SwitchCamera(TPCam);
+            SwitchCamera(TPCam, PlayerTP);
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
@@ -38,7 +42,7 @@ public class CameraController : MonoBehaviour
     }
     
 
-    void SwitchCamera(CinemachineVirtualCameraBase activeCam)
+    void SwitchCamera(CinemachineVirtualCameraBase activeCam, GameObject activePlayer)
     {
         // Set all priorities to a low value first
         FPCam.Priority = 0;
@@ -47,5 +51,10 @@ public class CameraController : MonoBehaviour
 
         // Boost the chosen one
         activeCam.Priority = 10;
+
+        // Enable the selected player and disable the others
+        PlayerFP.SetActive(activePlayer == PlayerFP);
+        PlayerISO.SetActive(activePlayer == PlayerISO);
+        PlayerTP.SetActive(activePlayer == PlayerTP);
     }
 }
