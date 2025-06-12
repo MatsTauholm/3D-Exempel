@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 266418008}
   - component: {fileID: 266418009}
   - component: {fileID: 266418007}
+  - component: {fileID: 266418010}
   m_Layer: 0
   m_Name: Third Person Camera
   m_TagString: Untagged
@@ -273,9 +274,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266418003}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.101811424, y: -0.000000029647465, z: 0.0000000030342173,
-    w: 0.9948037}
-  m_LocalPosition: {x: -12.2, y: 15.627058, z: 0.96283054}
+  m_LocalRotation: {x: 0.1521234, y: -0.0000000026674172, z: 4.1055495e-10, w: 0.98836154}
+  m_LocalPosition: {x: -12.2, y: 17.130587, z: 1.1942453}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -305,7 +305,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 40
+    FieldOfView: 75
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetOffset: {x: 0, y: 0, z: -5}
+  TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
     BindingMode: 4
     PositionDamping: {x: 1, y: 1, z: 1}
@@ -405,7 +405,7 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 10
+  Radius: 15
   Orbits:
     Top:
       Radius: 2
@@ -477,6 +477,22 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
+--- !u!114 &266418010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266418003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd59a4e70f208484f9f0b0fc13d20bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomSpeed: 2
+  zoomLerpSpeed: 10
+  minDistance: 3
+  maxDistance: 15
 --- !u!1001 &314737884
 PrefabInstance:
   m_ObjectHideFlags: 0

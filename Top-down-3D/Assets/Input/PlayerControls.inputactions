@@ -1,5 +1,5 @@
 {
-    "name": "TD Input",
+    "name": "PlayerControls",
     "maps": [
         {
             "name": "Player",
@@ -251,6 +251,34 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "CameraControls",
+            "id": "a526d0ec-cbe2-400e-90d6-70ef1db2c0e4",
+            "actions": [
+                {
+                    "name": "MouseZoom",
+                    "type": "Value",
+                    "id": "171d7b70-673d-49d6-86e3-3ebf9264a2c1",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8ecc7671-998e-4e20-8052-c6fb7a2aac04",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "MouseZoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

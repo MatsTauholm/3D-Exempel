@@ -258,6 +258,7 @@ GameObject:
   - component: {fileID: 266418008}
   - component: {fileID: 266418009}
   - component: {fileID: 266418007}
+  - component: {fileID: 266418010}
   m_Layer: 0
   m_Name: Third Person Camera
   m_TagString: Untagged
@@ -273,8 +274,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266418003}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1521234, y: -0.00000007574547, z: 0.000000011658344, w: 0.98836154}
-  m_LocalPosition: {x: -12.2, y: 15.627058, z: 5.9628305}
+  m_LocalRotation: {x: 0.1521234, y: -0.0000000026674172, z: 4.1055495e-10, w: 0.98836154}
+  m_LocalPosition: {x: -12.2, y: 17.130587, z: 1.1942453}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -304,7 +305,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 40
+    FieldOfView: 75
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -404,7 +405,7 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 10
+  Radius: 15
   Orbits:
     Top:
       Radius: 2
@@ -476,6 +477,22 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
+--- !u!114 &266418010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266418003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd59a4e70f208484f9f0b0fc13d20bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomSpeed: 2
+  zoomLerpSpeed: 10
+  minDistance: 3
+  maxDistance: 15
 --- !u!1001 &314737884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -804,8 +821,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558699721}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.917299, y: 16.57, z: -2.5631533}
+  m_LocalRotation: {x: -0.06346213, y: -0.16967346, z: -0.010949671, w: 0.9833939}
+  m_LocalPosition: {x: -7.215172, y: 10.692015, z: 1.484498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -896,7 +913,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 75
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -2493,6 +2510,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player First Person
       objectReference: {fileID: 0}
+    - target: {fileID: 558010075730353119, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2560,6 +2582,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Third Person
+      objectReference: {fileID: 0}
+    - target: {fileID: 3679395509074209741, guid: 7094a872de590524d820893306875ac2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}

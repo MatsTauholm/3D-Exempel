@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FPSController : MonoBehaviour
+public class FirstPersonControls : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;

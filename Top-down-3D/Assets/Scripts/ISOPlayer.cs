@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class TopDownControls : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
 
