@@ -14,14 +14,13 @@ GameObject:
   - component: {fileID: 7999375248014017993}
   - component: {fileID: 4884050049645753061}
   - component: {fileID: 5098507489574166352}
-  - component: {fileID: 470867378722904908}
   m_Layer: 0
   m_Name: Player First Person
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7345222425278600880
 Transform:
   m_ObjectHideFlags: 0
@@ -30,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558010075730353119}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.34842622, z: -0, w: 0.9373362}
+  m_LocalRotation: {x: 0, y: 0.34842482, z: 0, w: 0.93733674}
   m_LocalPosition: {x: -12.2, y: 14.56, z: -4.050112}
   m_LocalScale: {x: 3.9433, y: 3.9433, z: 3.9433}
   m_ConstrainProportionsScale: 0
@@ -53,7 +52,10 @@ MonoBehaviour:
   moveSpeed: 10
   jumpForce: 5
   gravity: -9.81
-  cameraHolder: {fileID: 5410994650871826338}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  sphereRadius: 0.3
 --- !u!54 &311501768404609113
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -165,31 +167,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!143 &470867378722904908
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 558010075730353119}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1.9999999
-  m_Radius: 0.49999994
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1683893856892108590
 GameObject:
   m_ObjectHideFlags: 0
