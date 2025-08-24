@@ -692,17 +692,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+  m_RenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ShadowRenderingLayersMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_Version: 4
+  m_LightLayerMask: 1
+  m_ShadowLayerMask: 1
+  m_RenderingLayers: 1
+  m_ShadowRenderingLayers: 1
 --- !u!1001 &415628051
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -822,7 +828,7 @@ Transform:
   m_GameObject: {fileID: 558699721}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.917299, y: 16.57, z: -2.5631533}
+  m_LocalPosition: {x: -10.917299, y: 14.530001, z: -2.5631533}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -864,7 +870,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -872,6 +877,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!81 &558699724
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1289,7 +1295,7 @@ Transform:
   m_GameObject: {fileID: 1052704603}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.917299, y: 16.57, z: -2.5631533}
+  m_LocalPosition: {x: -10.917299, y: 14.530001, z: -2.5631533}
   m_LocalScale: {x: 1.3619297, y: 1, z: 0.5866285}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2387,6 +2393,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PP_Meadow_08 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 138836365270009319, guid: 7baba197ce36c92439b423eabaad3737,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 767562868964138845, guid: 7baba197ce36c92439b423eabaad3737,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -2552,11 +2563,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player First Person
       objectReference: {fileID: 0}
-    - target: {fileID: 558010075730353119, guid: a44d4e612de8fac40906d428a863aa11,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2565,7 +2571,7 @@ PrefabInstance:
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 14.56
+      value: 12.52
       objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}

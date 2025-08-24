@@ -61,12 +61,14 @@ public class FirstPersonControls : MonoBehaviour
         camRight.Normalize();
 
         // Move relative to camera
-        Vector3 moveDirection = (camRight * moveInput.x + camForward * moveInput.y) * moveSpeed;
+        Vector3 targetVelocity = (camRight * moveInput.x + camForward * moveInput.y) * moveSpeed;
 
-        if (moveDirection.sqrMagnitude > 0.001f)
-        {
-            rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
-        }
+        // Keep current vertical velocity
+        Vector3 velocity = rb.linearVelocity;
+        velocity.x = targetVelocity.x;
+        velocity.z = targetVelocity.z;
+
+        rb.linearVelocity = velocity;
     }
 
     void Jump()
