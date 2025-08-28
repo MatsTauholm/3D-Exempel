@@ -5,14 +5,16 @@ using UnityEngine.InputSystem;
 public class FirstPersonControls : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float jumpForce = 5f;
 
-    private Vector2 moveInput;
     private Rigidbody rb;
-    public LayerMask groundLayer;
+    
     private bool isGrounded;
     public float sphereRadius = 0.3f;
+
+    public LayerMask groundLayer;
+    private Vector2 moveInput;
 
     void Start()
     {
@@ -27,11 +29,6 @@ public class FirstPersonControls : MonoBehaviour
     void OnJump()
     {
         Jump();
-    }
-
-    void Update()
-    {
-       
     }
 
     void FixedUpdate()

@@ -7,11 +7,17 @@ using UnityEngine.InputSystem;
 public class TopDownControls : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField]  float moveSpeed = 5f;
+    [SerializeField] float jumpForce = 5f;
 
     private Rigidbody rb;
     public Transform playerTransform;
     public Camera mainCamera;
+
+    private bool isGrounded;
+    public float sphereRadius = 0.3f;
+
+    public LayerMask groundLayer;
     private Vector2 moveInput;
 
     void Start()
@@ -43,20 +49,50 @@ public class TopDownControls : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Get camera forward/right directions, ignoring vertical tilt
-        Vector3 camForward = mainCamera.transform.forward;
-        Vector3 camRight = mainCamera.transform.right;
+        GroundCheck();
+        // Get the camera's forward and right vectors
+        Vector3 camForward = Camera.main.transform.forward;
+        Vector3 camRight = Camera.main.transform.right;
+
+        // Ignore vertical direction (y-axis)
         camForward.y = 0f;
         camRight.y = 0f;
         camForward.Normalize();
         camRight.Normalize();
 
-        // Movement relative to camera orientation
-        Vector3 moveDirection = (camForward * moveInput.y) + (camRight * moveInput.x);
+        // Move relative to camera
+        Vector3 targetVelocity = (camRight * moveInput.x + camForward * moveInput.y) * moveSpeed;
 
-        if (moveDirection.sqrMagnitude > 0.001f)
+        // Keep current vertical velocity
+        Vector3 velocity = rb.linearVelocity;
+        velocity.x = targetVelocity.x;
+        velocity.z = targetVelocity.z;
+
+        rb.linearVelocity = velocity;
+
+
+        //// Movement relative to camera orientation
+        //Vector3 moveDirection = (camForward * moveInput.y) + (camRight * moveInput.x);
+
+        //if (moveDirection.sqrMagnitude > 0.001f)
+        //{
+        //    rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
+        //}
+    }
+
+    void GroundCheck()
+    {
+        Vector3 checkPosition = transform.position + Vector3.down * 0.1f;
+        isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
+
+        Debug.DrawLine(transform.position, checkPosition, isGrounded ? Color.green : Color.red);
+    }
+
+    void Jump()
+    {
+        if (isGrounded)
         {
-            rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
+            rb.AddForce(new Vector3(0, jumpForce));
         }
     }
 }
