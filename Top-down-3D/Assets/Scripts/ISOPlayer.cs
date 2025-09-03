@@ -7,17 +7,19 @@ using UnityEngine.InputSystem;
 public class TopDownControls : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField]  float moveSpeed = 5f;
+    [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
 
-    private Rigidbody rb;
-    public Transform playerTransform;
-    public Camera mainCamera;
+    [SerializeField] Transform rayCastOrigin;
+    [SerializeField] Transform playerTransform;
+    [SerializeField] Camera mainCamera;
 
     private bool isGrounded;
     public float sphereRadius = 0.3f;
-
+    private Rigidbody rb;
     public LayerMask groundLayer;
+
+    private RaycastHit Hit;
     private Vector2 moveInput;
 
     void Start()
@@ -33,6 +35,14 @@ public class TopDownControls : MonoBehaviour
     void Update()
     {
         Look();
+    }
+
+    void GroundCheck()
+    {
+        if (Physics.Raycast(rayCastOrigin.position, Vector3.down, 100f, groundLayer))
+        {
+            Vector3 temp = 
+        }
     }
 
     void Look()
