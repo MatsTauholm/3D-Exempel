@@ -69,15 +69,6 @@ public class TopDownControls : MonoBehaviour
         velocity.z = targetVelocity.z;
 
         rb.linearVelocity = velocity;
-
-
-        //// Movement relative to camera orientation
-        //Vector3 moveDirection = (camForward * moveInput.y) + (camRight * moveInput.x);
-
-        //if (moveDirection.sqrMagnitude > 0.001f)
-        //{
-        //    rb.MovePosition(rb.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime);
-        //}
     }
 
     void GroundCheck()
