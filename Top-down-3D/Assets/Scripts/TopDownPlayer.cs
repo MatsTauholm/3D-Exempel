@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TopDownPlayer : MonoBehaviour
+public class TopDownControls : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
 
-    [SerializeField] Transform rayCastOrigin;
     [SerializeField] Transform playerTransform;
     [SerializeField] Camera mainCamera;
 
