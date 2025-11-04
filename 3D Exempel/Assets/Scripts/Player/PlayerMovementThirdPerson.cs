@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ThirdPersonPlayer : MonoBehaviour
+public class PlayerMovementThirdPerson : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] float moveSpeed = 5f;
