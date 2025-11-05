@@ -187,10 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f03c4b8d8c1e8974db412fbf4e03335d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDownControls
-  moveSpeed: 10
+  moveSpeed: 15
   jumpForce: 5
   playerTransform: {fileID: 8894946457897487361}
-  mainCamera: {fileID: 0}
   sphereRadius: 0.3
   groundLayer:
     serializedVersion: 2
@@ -207,7 +206,7 @@ GameObject:
   - component: {fileID: 8721732645790641403}
   - component: {fileID: 3895395980129522128}
   m_Layer: 0
-  m_Name: Eyes_TopDown
+  m_Name: Eyes_TD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

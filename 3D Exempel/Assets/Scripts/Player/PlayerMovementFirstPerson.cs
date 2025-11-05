@@ -7,13 +7,11 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] float sphereRadius = 0.3f;
+    [SerializeField] LayerMask groundLayer;
 
-    private Rigidbody rb;
-    
     private bool isGrounded;
-    public float sphereRadius = 0.3f;
-
-    public LayerMask groundLayer;
+    private Rigidbody rb;
     private Vector2 moveInput;
 
     void Start()

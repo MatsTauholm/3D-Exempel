@@ -40,6 +40,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     {
         GroundCheck();
         Move();
+        Jump();
     }
 
     void GroundCheck()
