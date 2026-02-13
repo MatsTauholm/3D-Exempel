@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static UnityEngine.UI.Image;
 
 public class PlayerMovementFirstPerson : MonoBehaviour
 {
@@ -11,12 +12,16 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
 
     private bool isGrounded;
+    private float radius;
     private Rigidbody rb;
     private Vector2 moveInput;
+    private CapsuleCollider capsule;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        capsule = GetComponent<CapsuleCollider>();
+        float radius = capsule.radius * 0.95f;
     }
 
     void OnMove(InputValue value)
@@ -37,10 +42,12 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 
     void GroundCheck()
     {
-        Vector3 checkPosition = transform.position + Vector3.down * 0.1f;
+        // Check if the player is grounded by checking a sphere below the player
+        Vector3 checkPosition = transform.position + Vector3.down * (capsule.height / 2);
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
 
-        Debug.DrawLine(transform.position, checkPosition, isGrounded ? Color.green : Color.red);
+        //Debug if needed
+        //Debug.DrawLine(transform.position, checkPosition, isGrounded ? Color.green : Color.red);
     }
 
     void Move()
@@ -49,29 +56,30 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         Vector3 camForward = Camera.main.transform.forward;
         Vector3 camRight = Camera.main.transform.right;
 
-        // Ignore vertical direction (y-axis)
+        // Ignore vertical direction (y-axis) to prevent moving up/down when looking up/down
         camForward.y = 0f;
         camRight.y = 0f;
-        camForward.Normalize();
+        camForward.Normalize(); //  Normalize to ensure consistent movement speed in all directions
         camRight.Normalize();
 
         // Move relative to camera
         Vector3 targetVelocity = (camRight * moveInput.x + camForward * moveInput.y) * moveSpeed;
 
-        // Keep current vertical velocity
-        Vector3 velocity = rb.linearVelocity;
-        velocity.x = targetVelocity.x;
-        velocity.z = targetVelocity.z;
-
-        rb.linearVelocity = velocity;
+        // Set the player's velocity while preserving the current vertical velocity (y-axis)    
+        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
     }
 
     void Jump()
     {
         if (isGrounded)
         {
-            rb.AddForce(new Vector3(0, jumpForce));
+            rb.AddForce(new Vector3(0, jumpForce, 0));
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(transform.position + Vector3.down * (capsule.height / 2 - radius), sphereRadius);
     }
 }
 
