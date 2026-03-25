@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,8 +12,10 @@ public class PlayerMovementTopDown : MonoBehaviour
     [SerializeField] float jumpForce = 5f;
 
     private bool isGrounded;
+    private bool shouldJump;
     public float sphereRadius = 0.3f;
     private Rigidbody rb;
+    private CapsuleCollider capsule;
     public LayerMask groundLayer;
 
     private RaycastHit Hit;
@@ -21,11 +24,17 @@ public class PlayerMovementTopDown : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        capsule = GetComponent<CapsuleCollider>();
     }
 
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+    }
+
+    void OnJump()
+    {
+        shouldJump = true;
     }
 
     void Update()
@@ -55,10 +64,8 @@ public class PlayerMovementTopDown : MonoBehaviour
 
     void GroundCheck()
     {
-        Vector3 checkPosition = transform.position + Vector3.down * 0.1f;
+        Vector3 checkPosition = capsule.bounds.center - Vector3.up * capsule.bounds.extents.y;
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
-
-        Debug.DrawLine(transform.position, checkPosition, isGrounded ? Color.green : Color.red);
     }
 
     private void Move()
@@ -86,9 +93,11 @@ public class PlayerMovementTopDown : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded)
+        Debug.Log("Attempting to jump. Grounded: " + isGrounded);
+        if (isGrounded && shouldJump)
         {
             rb.AddForce(new Vector3(0, jumpForce));
+            shouldJump = false;
         }
     }
 }

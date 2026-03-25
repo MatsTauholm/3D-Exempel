@@ -21,7 +21,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
-        float radius = capsule.radius * 0.95f;
     }
 
     void OnMove(InputValue value)
@@ -43,7 +42,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     void GroundCheck()
     {
         // Check if the player is grounded by checking a sphere below the player
-        Vector3 checkPosition = transform.position + Vector3.down * (capsule.height / 2);
+        Vector3 checkPosition = capsule.bounds.center - Vector3.up * capsule.bounds.extents.y;
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
 
         //Debug if needed
@@ -71,6 +70,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 
     void Jump()
     {
+        Debug.Log("Attempting to jump. Grounded: " + isGrounded);
         if (isGrounded)
         {
             rb.AddForce(new Vector3(0, jumpForce, 0));
