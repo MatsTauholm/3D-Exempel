@@ -171,7 +171,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -188,12 +188,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDownControls
   moveSpeed: 15
-  jumpForce: 5
-  playerTransform: {fileID: 8894946457897487361}
-  sphereRadius: 0.3
+  jumpForce: 300
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  sphereRadius: 0.3
 --- !u!1 &8679803641189320668
 GameObject:
   m_ObjectHideFlags: 0

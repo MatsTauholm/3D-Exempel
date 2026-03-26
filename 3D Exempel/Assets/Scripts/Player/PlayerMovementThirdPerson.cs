@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,22 +9,21 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
-
-    public float rotationSmoothTime = 0.1f;
-
-    private Rigidbody rb;
+    [SerializeField] float rotationSmoothTime = 0.1f;
+    [SerializeField] float sphereRadius = 0.3f;
+    [SerializeField] LayerMask groundLayer;
 
     private bool isGrounded;
-    private bool jumpPressed;
-    public float sphereRadius = 0.3f;
+    private bool shouldJump;
     private float turnSmoothVelocity;
-
-    public LayerMask groundLayer;
+    private Rigidbody rb;
+    private CapsuleCollider capsule;
     private Vector2 moveInput;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        capsule = GetComponent<CapsuleCollider>();
     }
 
     void OnMove(InputValue value)
@@ -33,22 +33,25 @@ public class PlayerMovementThirdPerson : MonoBehaviour
 
     void OnJump()
     {
-        jumpPressed = true;
+        shouldJump = true;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         GroundCheck();
         Move();
+    }
+
+    void FixedUpdate()
+    { 
         Jump();
     }
 
     void GroundCheck()
     {
-        Vector3 checkPosition = transform.position + Vector3.down * 0.1f;
+        // Check if the player is grounded by checking a sphere below the player
+        Vector3 checkPosition = capsule.bounds.center - Vector3.up * capsule.bounds.extents.y;
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
-
-        Debug.DrawLine(transform.position, checkPosition, isGrounded ? Color.green : Color.red);
     }
 
     void Move()
@@ -70,21 +73,16 @@ public class PlayerMovementThirdPerson : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
         }
 
-        // Preserve existing vertical velocity
-        Vector3 currentVel = rb.linearVelocity;
-        Vector3 targetVel = moveDir * moveSpeed;
-        targetVel.y = currentVel.y;
-
-        rb.linearVelocity = targetVel;
+        // Set the player's velocity while preserving the current vertical velocity (y-axis)    
+        rb.linearVelocity = new Vector3(moveDir.x * moveSpeed, rb.linearVelocity.y, moveDir.z * moveSpeed);
     }
 
     void Jump()
     {
-        if (jumpPressed && isGrounded)
+        if (shouldJump && isGrounded)
         {
-            rb.AddForce(new Vector3(0, jumpForce));
-            jumpPressed = false;
+            rb.AddForce(new Vector2(0, jumpForce));
+            shouldJump = false;
         }
     }
 }
-

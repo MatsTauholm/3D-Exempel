@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 558010075730353119, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_Name
-      value: Player First Person
+      value: Player First Person - With gun
       objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
@@ -62,6 +62,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999375248014017993, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 57a869cf5e144ae4195bf08b533e10f8,
+        type: 3}
+    - target: {fileID: 7999375248014017993, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard&Mouse
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

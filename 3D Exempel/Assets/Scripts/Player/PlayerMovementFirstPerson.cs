@@ -16,6 +16,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     private Rigidbody rb;
     private Vector2 moveInput;
     private CapsuleCollider capsule;
+    private bool shouldJump;
 
     void Start()
     {
@@ -30,13 +31,19 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 
     void OnJump()
     {
-        Jump();
+        shouldJump = true;
+    }
+
+    void Update()
+    {
+        GroundCheck();
+        
     }
 
     void FixedUpdate()
     {
-        GroundCheck();
         Move();
+        Jump();
     }
 
     void GroundCheck()
@@ -64,22 +71,23 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         // Move relative to camera
         Vector3 targetVelocity = (camRight * moveInput.x + camForward * moveInput.y) * moveSpeed;
 
-        // Set the player's velocity while preserving the current vertical velocity (y-axis)    
-        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
+        if (isGrounded)
+        {
+            rb.linearVelocity = new Vector3(targetVelocity.x, -2f, targetVelocity.z);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
+        }
     }
 
     void Jump()
     {
         Debug.Log("Attempting to jump. Grounded: " + isGrounded);
-        if (isGrounded)
+        if (isGrounded && shouldJump)
         {
-            rb.AddForce(new Vector3(0, jumpForce, 0));
+            rb.AddForce(new Vector2(0, jumpForce));
+            shouldJump = false;
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position + Vector3.down * (capsule.height / 2 - radius), sphereRadius);
-    }
 }
-

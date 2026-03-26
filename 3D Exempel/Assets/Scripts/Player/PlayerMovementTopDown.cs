@@ -10,14 +10,13 @@ public class PlayerMovementTopDown : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float sphereRadius = 0.3f;
 
     private bool isGrounded;
     private bool shouldJump;
-    public float sphereRadius = 0.3f;
     private Rigidbody rb;
     private CapsuleCollider capsule;
-    public LayerMask groundLayer;
-
     private RaycastHit Hit;
     private Vector2 moveInput;
 
@@ -39,26 +38,13 @@ public class PlayerMovementTopDown : MonoBehaviour
 
     void Update()
     {
+        GroundCheck();
+        Move();
         Look();
-    }
-
-    void Look()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            Vector3 lookAtPoint = hit.point;
-            lookAtPoint.y = gameObject.transform.position.y; // Keep the same y position as the player
-            gameObject.transform.LookAt(lookAtPoint);
-            
-        }
     }
 
     void FixedUpdate()
     {
-        GroundCheck();
-        Move();
         Jump();
     }
 
@@ -83,12 +69,21 @@ public class PlayerMovementTopDown : MonoBehaviour
         // Move relative to camera
         Vector3 targetVelocity = (camRight * moveInput.x + camForward * moveInput.y) * moveSpeed;
 
-        // Keep current vertical velocity
-        Vector3 velocity = rb.linearVelocity;
-        velocity.x = targetVelocity.x;
-        velocity.z = targetVelocity.z;
+        // Set the player's velocity while preserving the current vertical velocity (y-axis)    
+        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
+    }
 
-        rb.linearVelocity = velocity;
+    void Look()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Vector3 lookAtPoint = hit.point;
+            lookAtPoint.y = gameObject.transform.position.y; // Keep the same y position as the player
+            gameObject.transform.LookAt(lookAtPoint);
+
+        }
     }
 
     void Jump()
@@ -96,7 +91,7 @@ public class PlayerMovementTopDown : MonoBehaviour
         Debug.Log("Attempting to jump. Grounded: " + isGrounded);
         if (isGrounded && shouldJump)
         {
-            rb.AddForce(new Vector3(0, jumpForce));
+            rb.AddForce(new Vector2(0, jumpForce));
             shouldJump = false;
         }
     }
