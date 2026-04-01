@@ -9,12 +9,16 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float sphereRadius = 0.3f;
+    [SerializeField] float rotationSmoothTime = 0.1f;
     [SerializeField] LayerMask groundLayer;
 
     private bool isGrounded;
     private float radius;
+    private float turnSmoothVelocity;
     private Rigidbody rb;
     private Vector2 moveInput;
+    private Vector3 targetVelocity;
+
     private CapsuleCollider capsule;
     private bool shouldJump;
 
@@ -44,6 +48,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     {
         Move();
         Jump();
+        RotateTowardMouse();
     }
 
     void GroundCheck()
@@ -81,6 +86,18 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         }
     }
 
+
+    void RotateTowardMouse()
+    {
+        // Smoothly rotate to face move direction if moving
+        if (targetVelocity.sqrMagnitude > 0.01f)
+        {
+            float targetAngle = Mathf.Atan2(targetVelocity.x, targetVelocity.z) * Mathf.Rad2Deg;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
+                                                      ref turnSmoothVelocity, rotationSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+        }
+    }
     void Jump()
     {
         Debug.Log("Attempting to jump. Grounded: " + isGrounded);

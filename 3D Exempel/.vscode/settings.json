@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Top-down-3D.sln"
+    "dotnet.defaultSolution": "3D Exempel.sln"
 }

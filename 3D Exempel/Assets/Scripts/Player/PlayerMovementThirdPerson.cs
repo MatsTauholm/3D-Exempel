@@ -19,6 +19,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     private Rigidbody rb;
     private CapsuleCollider capsule;
     private Vector2 moveInput;
+    private Vector3 moveDir;
 
     void Start()
     {
@@ -40,6 +41,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     {
         GroundCheck();
         Move();
+        RotateTowardMouse();
     }
 
     void FixedUpdate()
@@ -62,8 +64,14 @@ public class PlayerMovementThirdPerson : MonoBehaviour
         Vector3 camRight = Vector3.Scale(cam.right, new Vector3(1, 0, 1)).normalized;
 
         Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
-        Vector3 moveDir = camRight * inputDir.x + camForward * inputDir.z;
+        Vector3 moveDir = camRight * inputDir.x + camForward * inputDir.z;   
 
+        // Set the player's velocity while preserving the current vertical velocity (y-axis)    
+        rb.linearVelocity = new Vector3(moveDir.x * moveSpeed, rb.linearVelocity.y, moveDir.z * moveSpeed);
+    }
+
+    void RotateTowardMouse()
+    {
         // Smoothly rotate to face move direction if moving
         if (moveDir.sqrMagnitude > 0.01f)
         {
@@ -72,11 +80,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
                                                       ref turnSmoothVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
         }
-
-        // Set the player's velocity while preserving the current vertical velocity (y-axis)    
-        rb.linearVelocity = new Vector3(moveDir.x * moveSpeed, rb.linearVelocity.y, moveDir.z * moveSpeed);
     }
-
     void Jump()
     {
         if (shouldJump && isGrounded)
