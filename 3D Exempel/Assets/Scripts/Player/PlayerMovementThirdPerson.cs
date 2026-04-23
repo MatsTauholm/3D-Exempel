@@ -13,6 +13,11 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     [SerializeField] float sphereRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
 
+    [Header("Slope Handling")]
+    [SerializeField] float maxSlopeAngle = 45f;
+    private RaycastHit slopeHit;
+
+
     private bool isGrounded;
     private bool shouldJump;
     private float turnSmoothVelocity;
@@ -54,6 +59,26 @@ public class PlayerMovementThirdPerson : MonoBehaviour
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
     }
 
+    private bool IsOnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, capsule.bounds.extents.y + 0.5f, groundLayer))
+        {
+            float slopeAngle = Vector3.Angle(slopeHit.normal, Vector3.up);
+            return slopeAngle > 0f && slopeAngle <= maxSlopeAngle;
+        }
+        return false;
+    }
+
+    private Vector3 GetSlopeMoveDirection(Vector3 moveDir)
+    {
+        if (IsOnSlope())
+        {
+            // Project the move direction onto the slope
+            return Vector3.ProjectOnPlane(moveDir, slopeHit.normal).normalized;
+        }
+        return moveDir;
+    }
+
     void Move()
     {
         // Camera-relative input direction
@@ -71,6 +96,11 @@ public class PlayerMovementThirdPerson : MonoBehaviour
             float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
                                                       ref turnSmoothVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+        }
+
+        if(IsOnSlope())
+        {
+            moveDir = GetSlopeMoveDirection(moveDir);
         }
 
         // Set the player's velocity while preserving the current vertical velocity (y-axis)    
