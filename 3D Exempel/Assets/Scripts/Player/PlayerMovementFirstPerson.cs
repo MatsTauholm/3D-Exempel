@@ -1,23 +1,30 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static UnityEngine.UI.Image;
 
 public class PlayerMovementFirstPerson : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float jumpForce = 5f;
-    [SerializeField] float sphereRadius = 0.3f;
+    [SerializeField] float moveForce = 5f;
+    [SerializeField] float maxSpeed = 10f;
+    [SerializeField] float groundDrag = 5f;
+    [SerializeField] float jumpForce = 5f;    
     [SerializeField] float rotationSmoothTime = 0.1f;
-    [SerializeField] LayerMask groundLayer;
-
-    private bool isGrounded;
-    private float radius;
     private float turnSmoothVelocity;
+
+    [Header("Ground Check Settings")]
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float sphereRadius = 0.3f;
+    private bool isGrounded;
+
+    [Header("Slope Handling Settings")]
+    [SerializeField] float maxSlopeAngle = 45f; // Maximum slope angle the player can walk on
+    private RaycastHit slopeHit;
+
     private Rigidbody rb;
     private Vector2 moveInput;
-    private Vector3 targetVelocity;
+    private Vector3 moveDirection;
 
     private CapsuleCollider capsule;
     private bool shouldJump;
@@ -41,14 +48,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     void Update()
     {
         GroundCheck();
-        
-    }
-
-    void FixedUpdate()
-    {
-        Move();
-        Jump();
-        RotateTowardMouse();
+        ApplyDrag();
     }
 
     void GroundCheck()
@@ -61,6 +61,41 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         //Debug.DrawLine(transform.position, checkPosition, isGrounded ? Color.green : Color.red);
     }
 
+    private void ApplyDrag()
+    {
+        if(isGrounded)
+        {
+            rb.linearDamping = groundDrag;
+        }
+        else
+        {
+            rb.linearDamping = 0f; // No drag in the air for more responsive jumping/falling
+        }
+    }
+
+    private bool OnSlope()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, capsule.bounds.extents.y + 0.5f, groundLayer))
+        {
+            float slopeAngle = Vector3.Angle(slopeHit.normal, Vector3.up);
+            return slopeAngle > 0 && slopeAngle <= maxSlopeAngle;
+        }
+        return false;
+    }
+
+    private Vector3 GetSlopeMoveDirection()
+    {
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+    void FixedUpdate()
+    {
+        Move();
+        Jump();
+        //RotateTowardMouse();
+    }
+
+    #region Movement
     void Move()
     {
         // Get the camera's forward and right vectors
@@ -74,37 +109,59 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         camRight.Normalize();
 
         // Move relative to camera
-        Vector3 targetVelocity = (camRight * moveInput.x + camForward * moveInput.y) * moveSpeed;
+        moveDirection = (camRight * moveInput.x + camForward * moveInput.y);
 
-        if (isGrounded)
+        //If on ground and/or on a slope
+        if(isGrounded)
         {
-            rb.linearVelocity = new Vector3(targetVelocity.x, -2f, targetVelocity.z);
+            if (OnSlope())
+            {
+                rb.AddForce(GetSlopeMoveDirection() * moveForce, ForceMode.Force);
+                if (rb.linearVelocity.y > 0) // Prevent sliding up slopes
+                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            }
+            else
+            {
+                rb.AddForce(moveDirection.normalized * moveForce, ForceMode.Force);
+            }
         }
-        else
-        {
-            rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
-        }
+        else // In air - allow some control but less than on ground
+            rb.AddForce(moveDirection.normalized * moveForce, ForceMode.Force);
+
+        rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
+
+        //Speed cap to prevent excessive velocity buildup
+        rb.linearVelocity = new Vector3(
+            Mathf.Clamp(rb.linearVelocity.x, -maxSpeed, maxSpeed),
+            rb.linearVelocity.y,
+            Mathf.Clamp(rb.linearVelocity.z, -maxSpeed, maxSpeed)
+        );
+
     }
+    #endregion
 
-
+    #region Rotation Toward Mouse
     void RotateTowardMouse()
     {
         // Smoothly rotate to face move direction if moving
-        if (targetVelocity.sqrMagnitude > 0.01f)
+        if (moveDirection.sqrMagnitude > 0.01f)
         {
-            float targetAngle = Mathf.Atan2(targetVelocity.x, targetVelocity.z) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
             float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
                                                       ref turnSmoothVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
         }
     }
+    #endregion
+
+    #region Jumping
     void Jump()
     {
-        Debug.Log("Attempting to jump. Grounded: " + isGrounded);
         if (isGrounded && shouldJump)
         {
             rb.AddForce(new Vector2(0, jumpForce));
             shouldJump = false;
         }
     }
+    #endregion
 }
