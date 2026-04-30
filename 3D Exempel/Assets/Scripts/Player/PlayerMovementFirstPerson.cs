@@ -7,12 +7,14 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] float moveForce = 5f;
+    [SerializeField] float airForce = 2.5f;
     [SerializeField] float maxSpeed = 10f;
     [SerializeField] float groundDrag = 5f;
+    [SerializeField] float gravity = -9.81f;
     [SerializeField] float jumpForce = 5f;    
     [SerializeField] float rotationSmoothTime = 0.1f;
     private float turnSmoothVelocity;
-
+    
     [Header("Ground Check Settings")]
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float sphereRadius = 0.3f;
@@ -25,12 +27,13 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     private Rigidbody rb;
     private Vector2 moveInput;
     private Vector3 moveDirection;
-
     private CapsuleCollider capsule;
     private bool shouldJump;
+    
 
     void Start()
     {
+        Physics.gravity = new Vector3(0, gravity, 0);
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
     }
@@ -42,7 +45,10 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 
     void OnJump()
     {
-        shouldJump = true;
+        if(isGrounded)
+        {
+            shouldJump = true;
+        }
     }
 
     void Update()
@@ -92,7 +98,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     {
         Move();
         Jump();
-        //RotateTowardMouse();
     }
 
     #region Movement
@@ -126,7 +131,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
             }
         }
         else // In air - allow some control but less than on ground
-            rb.AddForce(moveDirection.normalized * moveForce, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * airForce, ForceMode.Force);
 
         rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
 
