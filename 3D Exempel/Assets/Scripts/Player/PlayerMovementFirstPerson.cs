@@ -10,10 +10,9 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [SerializeField] float airForce = 2.5f;
     [SerializeField] float maxSpeed = 10f;
     [SerializeField] float groundDrag = 5f;
+    [SerializeField] float airDrag = 2f;
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float jumpForce = 5f;    
-    [SerializeField] float rotationSmoothTime = 0.1f;
-    private float turnSmoothVelocity;
     
     [Header("Ground Check Settings")]
     [SerializeField] LayerMask groundLayer;
@@ -33,6 +32,8 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Physics.gravity = new Vector3(0, gravity, 0);
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
@@ -57,14 +58,10 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         ApplyDrag();
     }
 
-    void GroundCheck()
+    void GroundCheck() // Check if the player is grounded by checking a sphere below the player
     {
-        // Check if the player is grounded by checking a sphere below the player
         Vector3 checkPosition = capsule.bounds.center - Vector3.up * capsule.bounds.extents.y;
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
-
-        //Debug if needed
-        //Debug.DrawLine(transform.position, checkPosition, isGrounded ? Color.green : Color.red);
     }
 
     private void ApplyDrag()
@@ -75,7 +72,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         }
         else
         {
-            rb.linearDamping = 0f; // No drag in the air for more responsive jumping/falling
+            rb.linearDamping = airDrag; 
         }
     }
 
@@ -116,7 +113,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         // Move relative to camera
         moveDirection = (camRight * moveInput.x + camForward * moveInput.y);
 
-        //If on ground and/or on a slope
         if(isGrounded)
         {
             if (OnSlope())
@@ -125,12 +121,12 @@ public class PlayerMovementFirstPerson : MonoBehaviour
                 if (rb.linearVelocity.y > 0) // Prevent sliding up slopes
                     rb.AddForce(Vector3.down * 80f, ForceMode.Force);
             }
-            else
+            else // On flat ground
             {
                 rb.AddForce(moveDirection.normalized * moveForce, ForceMode.Force);
             }
         }
-        else // In air - allow some control but less than on ground
+        else // In air
             rb.AddForce(moveDirection.normalized * airForce, ForceMode.Force);
 
         rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
@@ -142,20 +138,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
             Mathf.Clamp(rb.linearVelocity.z, -maxSpeed, maxSpeed)
         );
 
-    }
-    #endregion
-
-    #region Rotation Toward Mouse
-    void RotateTowardMouse()
-    {
-        // Smoothly rotate to face move direction if moving
-        if (moveDirection.sqrMagnitude > 0.01f)
-        {
-            float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
-                                                      ref turnSmoothVelocity, rotationSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
-        }
     }
     #endregion
 

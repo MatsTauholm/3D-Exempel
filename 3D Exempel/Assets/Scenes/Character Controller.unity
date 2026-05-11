@@ -1093,7 +1093,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 75
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -1119,8 +1119,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.34842482, z: 0, w: 0.93733674}
-  m_LocalPosition: {x: -11.796273, y: 5.9533024, z: -32.7887}
+  m_LocalRotation: {x: 0.1521234, y: -0.000000002667417, z: 4.1055487e-10, w: 0.98836154}
+  m_LocalPosition: {x: 15, y: 10.450587, z: -48.805756}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1730,6 +1730,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player First Person
       objectReference: {fileID: 0}
+    - target: {fileID: 558010075730353119, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1779,6 +1784,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: airDrag
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: gravity
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: airForce
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: jumpForce
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: moveForce
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: groundDrag
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1865,7 +1900,7 @@ PrefabInstance:
     - target: {fileID: 7426596274581524645, guid: 55c9d115a3f9e9f498dd07bac9c5b192,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2391,7 +2426,7 @@ PrefabInstance:
     - target: {fileID: 3427054257082275113, guid: 50283670c7d2ee44089ae4ca95ae3565,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7961067196223209984, guid: 50283670c7d2ee44089ae4ca95ae3565,
         type: 3}
