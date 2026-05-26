@@ -41,19 +41,20 @@ public class PlayerMovementCharacterController : MonoBehaviour
     {
         // Convert 2D input into a 3D direction
         Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
-        if (inputDir.sqrMagnitude < 0.01f) return;
 
+        // If there's no input, don't move
+        if (inputDir.sqrMagnitude < 0.01f)
+        {
+            return;
+        }
+            
         // Get camera’s forward & right (flattened to ground plane)
         Transform cam = Camera.main.transform;
         Vector3 camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
         Vector3 camRight = Vector3.Scale(cam.right, new Vector3(1, 0, 1)).normalized;
 
+        // Calculate movement direction relative to camera
         Vector3 moveDir = camRight * inputDir.x + camForward * inputDir.z;
-
-        // Smoothly rotate player to face movement direction
-        float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
-        float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationSmoothTime);
-        transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
 
         // Move the character
         controller.Move(moveDir * moveSpeed * Time.deltaTime);
@@ -82,5 +83,4 @@ public class PlayerMovementCharacterController : MonoBehaviour
         // Move vertically
         controller.Move(velocity * Time.deltaTime);
     }
-
 }
