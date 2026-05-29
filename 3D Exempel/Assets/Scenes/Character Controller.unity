@@ -2043,7 +2043,7 @@ PrefabInstance:
     - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: airDrag
-      value: 8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}

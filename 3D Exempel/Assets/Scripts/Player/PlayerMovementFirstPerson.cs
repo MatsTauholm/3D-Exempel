@@ -11,7 +11,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintSpeed = 5f;
-    [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float groundDrag = 5f;
     [SerializeField] private float gravityScale = 3f;
     private bool isSprinting;
@@ -21,6 +20,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float jumpCooldown = 0.25f;
     [SerializeField] private float airMultiplier = 2.5f;
+    [SerializeField] private float airDrag = 2f;
 
     [Header("Crouch Settings")]
     [SerializeField] private float crouchSpeed;
@@ -38,22 +38,24 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
-    private Rigidbody rb;
     [SerializeField] private PhysicsMaterial zeroFriction;
     [SerializeField] private PhysicsMaterial normalFriction;
+    private Rigidbody rb;
     private Vector2 moveInput;
     private Vector3 moveDirection;
     private CapsuleCollider capsule;
     private bool shouldJump;
 
-    public MovementState state;
-    public enum MovementState
-    {
-        walking,
-        sprinting,
-        crouching,
-        air
-    }
+    #region State machine variables (not in use)
+    //public MovementState state;
+    //public enum MovementState
+    //{
+    //    walking,
+    //    sprinting,
+    //    crouching,
+    //    air
+    //}
+    #endregion
 
     private void Awake()
     {
@@ -64,7 +66,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        Cursor.visible = false; // Lock the cursor to the center of the screen and hide it for a first-person experience
         rb.freezeRotation = true;
     }
 
@@ -85,12 +87,12 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     {
         GroundCheck();
         ApplyDrag();
-        StateHandler();
+        //StateHandler();
         SpeedControl();
         SetMaterial();
     }
 
-    private void SetMaterial()
+    private void SetMaterial() // Set the physics material based on whether the player is on a slope or not to prevent sliding and getting stuck on walls
     {
         if (OnSlope())
         {
@@ -102,35 +104,35 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         }
     }
 
-    private void StateHandler()
-    {
-        // Mode - Crouching
-        if (isCrouching)
-        {
-            state = MovementState.crouching;
-            moveForce = crouchSpeed;
-        }
+    //private void StateHandler() // Handle the player's movement state and set the move force accordingly
+    //{
+    //    // Mode - Crouching
+    //    if (isCrouching)
+    //    {
+    //        state = MovementState.crouching;
+    //        moveForce = crouchSpeed;
+    //    }
 
-        // Mode - Sprinting
-        else if (isGrounded && isSprinting)
-        {
-            state = MovementState.sprinting;
-            moveForce = sprintSpeed;
-        }
+    //    // Mode - Sprinting
+    //    else if (isGrounded && isSprinting)
+    //    {
+    //        state = MovementState.sprinting;
+    //        moveForce = sprintSpeed;
+    //    }
 
-        // Mode - Walking
-        else if (isGrounded)
-        {
-            state = MovementState.walking;
-            moveForce = moveSpeed;
-        }
+    //    // Mode - Walking
+    //    else if (isGrounded)
+    //    {
+    //        state = MovementState.walking;
+    //        moveForce = moveSpeed;
+    //    }
 
-        // Mode - Air
-        else
-        {
-            state = MovementState.air;
-        }
-    }
+    //    // Mode - Air
+    //    else
+    //    {
+    //        state = MovementState.air;
+    //    }
+    //}
 
     void GroundCheck() // Check if the player is grounded by checking a sphere below the player
     {
@@ -138,29 +140,28 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
     }
 
-    private void ApplyDrag()
+    private void ApplyDrag() // Change drag in the air to allow for better air control
     {
         if(isGrounded)
         {
             rb.linearDamping = groundDrag;
         }
-        else
+        else 
         {
-            rb.linearDamping = 0; 
+            rb.linearDamping = airDrag; 
         }
     }
 
     private void SpeedControl()
-    {
-        // limiting speed on slope
-        if (OnSlope() && !exitingSlope)
+    { 
+        if (OnSlope() && !exitingSlope) // limiting speed on slope
         {
             if (rb.linearVelocity.magnitude > moveSpeed)
+            {
                 rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
+            }    
         }
-
-        // limiting speed on ground or in air
-        else
+        else // limiting speed on ground or in air
         {
             Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
@@ -195,9 +196,10 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         Jump();
     }
 
-    private void SetGravity()
+    private void SetGravity() // Apply custom gravity to allow for better control on slopes and in the air
     {
         rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
+        rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
     }
 
     void Move()
@@ -217,24 +219,25 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 
         if(isGrounded)
         {
-            if (OnSlope() && !exitingSlope)
+            if (OnSlope() && !exitingSlope) //On a slope
             {
-                rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+                rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 15f, ForceMode.Force);
                 if (rb.linearVelocity.y > 0) // Prevent sliding up slopes
+                {
                     rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+                }
             }
             else // On flat ground
             {
-                rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+                rb.AddForce(moveDirection * moveSpeed * 10f, ForceMode.Force);
             }
         }
-        else // In air
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-
-        rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
-
+        else // In the air
+        {
+            rb.AddForce(moveDirection * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+        Debug.Log("Player velocity: " + rb.linearVelocity);
     }
-
 
     void Jump()
     {
