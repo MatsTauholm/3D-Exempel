@@ -10,7 +10,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float sprintSpeed = 5f;
     [SerializeField] private float groundDrag = 5f;
     [SerializeField] private float gravityScale = 3f;
     private bool isSprinting;
@@ -21,12 +20,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [SerializeField] private float jumpCooldown = 0.25f;
     [SerializeField] private float airMultiplier = 2.5f;
     [SerializeField] private float airDrag = 2f;
-
-    [Header("Crouch Settings")]
-    [SerializeField] private float crouchSpeed;
-    [SerializeField] private float crouchYScale;
-    private float startYScale;
-    private bool isCrouching;
 
     [Header("Ground Check Settings")]
     [SerializeField] private LayerMask groundLayer;
@@ -87,7 +80,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     {
         GroundCheck();
         ApplyDrag();
-        //StateHandler();
+        //StateHandler(); //WiP
         SpeedControl();
         SetMaterial();
     }
@@ -152,20 +145,19 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         }
     }
 
-    private void SpeedControl()
+    private void SpeedControl() //Regulate the player's speed in different situations 
     { 
-        if (OnSlope() && !exitingSlope) // limiting speed on slope
+        if (OnSlope() && !exitingSlope) // Limiting speed on slope
         {
             if (rb.linearVelocity.magnitude > moveSpeed)
             {
                 rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
             }    
         }
-        else // limiting speed on ground or in air
+        else // Limiting speed on ground or in air
         {
-            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z); // Get the horizontal velocity (ignoring vertical velocity)
 
-            // limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
@@ -174,19 +166,19 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         }
     }
 
-    private bool OnSlope()
+    private bool OnSlope() //Return true if the player is on a slope
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, capsule.bounds.extents.y + 0.5f))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, capsule.bounds.extents.y + 0.5f)) // Cast a ray downwards to check for the slope angle
         {
-            float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
-            return slopeAngle != 0 && slopeAngle < maxSlopeAngle;
+            float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal); // Calculate the angle between the up vector and the slope normal
+            return slopeAngle != 0 && slopeAngle < maxSlopeAngle; // Return true if the slope angle is greater than 0 and less than the maximum slope angle
         }
         return false;
     }
 
-    private Vector3 GetSlopeMoveDirection()
+    private Vector3 GetSlopeMoveDirection() // Get the movement direction adjusted for the slope to allow for smooth movement on slopes
     {
-        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized; // Project the movement direction onto the slope plane defined by the slope normal and normalize it to maintain consistent movement speed
     }
 
     void FixedUpdate()
@@ -236,7 +228,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         {
             rb.AddForce(moveDirection * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
-        Debug.Log("Player velocity: " + rb.linearVelocity);
     }
 
     void Jump()
