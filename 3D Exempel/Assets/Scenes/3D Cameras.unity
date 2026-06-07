@@ -187,14 +187,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   m_Enabled: 1
-  serializedVersion: 11
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
+  m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -410,8 +410,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558699721}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.917299, y: 14.530001, z: -2.5631533}
+  m_LocalRotation: {x: 0.1521234, y: -0.000000002667417, z: 4.1055487e-10, w: 0.98836154}
+  m_LocalPosition: {x: -12.2, y: 17.130587, z: 1.1942453}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -502,7 +502,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 75
   orthographic: 0
   orthographic size: 10
   m_Depth: 0
@@ -1089,6 +1089,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: First Person Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3709476974366729735, guid: 48a546a2064d4854c9807a3fe53187d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7591476219960261332, guid: 48a546a2064d4854c9807a3fe53187d4,
         type: 3}
@@ -1830,6 +1835,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Isometric Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 6226166183321057513, guid: 02b76e089536ae3479d0e7d028fef2a8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1847,6 +1857,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player First Person
+      objectReference: {fileID: 0}
+    - target: {fileID: 558010075730353119, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
@@ -1916,6 +1931,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Third Person
       objectReference: {fileID: 0}
+    - target: {fileID: 3679395509074209741, guid: 7094a872de590524d820893306875ac2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1934,22 +1954,22 @@ PrefabInstance:
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9373362
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.34842622
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}
@@ -1959,7 +1979,7 @@ PrefabInstance:
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 40.782
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}

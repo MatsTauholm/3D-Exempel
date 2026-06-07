@@ -64,7 +64,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
         Vector3 camRight = Vector3.Scale(cam.right, new Vector3(1, 0, 1)).normalized;
 
         Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
-        Vector3 moveDir = camRight * inputDir.x + camForward * inputDir.z;   
+        moveDir = camRight * inputDir.x + camForward * inputDir.z;   
 
         // Set the player's velocity while preserving the current vertical velocity (y-axis)    
         rb.linearVelocity = new Vector3(moveDir.x * moveSpeed, rb.linearVelocity.y, moveDir.z * moveSpeed);
@@ -75,6 +75,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
         // Smoothly rotate to face move direction if moving
         if (moveDir.sqrMagnitude > 0.01f)
         {
+            Debug.Log("Rotating towards move direction: " + moveDir);
             float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
             float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
                                                       ref turnSmoothVelocity, rotationSmoothTime);
