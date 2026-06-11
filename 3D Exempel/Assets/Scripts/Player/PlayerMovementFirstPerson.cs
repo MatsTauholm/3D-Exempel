@@ -20,6 +20,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [SerializeField] private float jumpCooldown = 0.25f;
     [SerializeField] private float airMultiplier = 2.5f;
     [SerializeField] private float airDrag = 2f;
+    private bool shouldJump;
 
     [Header("Ground Check Settings")]
     [SerializeField] private LayerMask groundLayer;
@@ -28,17 +29,16 @@ public class PlayerMovementFirstPerson : MonoBehaviour
 
     [Header("Slope Handling Settings")]
     [SerializeField] private float maxSlopeAngle = 45f; // Maximum slope angle the player can walk on
+    [SerializeField] private PhysicsMaterial zeroFriction;
+    [SerializeField] private PhysicsMaterial normalFriction;
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
-    [SerializeField] private PhysicsMaterial zeroFriction;
-    [SerializeField] private PhysicsMaterial normalFriction;
     private Rigidbody rb;
     private Vector2 moveInput;
     private Vector3 moveDirection;
     private CapsuleCollider capsule;
-    private bool shouldJump;
-
+    
     #region State machine variables (not in use)
     //public MovementState state;
     //public enum MovementState
