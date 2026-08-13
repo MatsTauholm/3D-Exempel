@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 694589895514361923}
   - component: {fileID: 6307381277975864692}
   m_Layer: 0
-  m_Name: Isometric Camera
+  m_Name: Top Down Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5973986580864880994
 Transform:
   m_ObjectHideFlags: 0

@@ -1,42 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Cinemachine;
-using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] Camera mainCam;
     [SerializeField] CinemachineCamera FPCam;
-    [SerializeField] CinemachineCamera ISOCam;
+    [SerializeField] CinemachineCamera TDCam;
     [SerializeField] CinemachineCamera TPCam;
 
-     [SerializeField] GameObject PlayerFP;
-     [SerializeField] GameObject PlayerISO;
-     [SerializeField] GameObject PlayerTP;
+    [SerializeField] GameObject PlayerFP;
+    [SerializeField] GameObject PlayerTD;
+    [SerializeField] GameObject PlayerTP;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Keyboard.current.digit1Key.isPressed)
         {
             SwitchCamera(FPCam, PlayerFP);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+
+        if (Keyboard.current.digit2Key.isPressed)
         {
-            SwitchCamera(ISOCam, PlayerISO);
+            SwitchCamera(TDCam, PlayerTD);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+
+        if (Keyboard.current.digit3Key.isPressed)
         {
             SwitchCamera(TPCam, PlayerTP);
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        if (Mouse.current.scroll.y.ReadValue() > 0)
         {
-            ISOCam.Lens.OrthographicSize += 1; //Change values according to your requirements
+            TDCam.Lens.OrthographicSize += 1; //Change values according to your requirements
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+
+        if (Mouse.current.scroll.y.ReadValue() < 0)
         {
-            ISOCam.Lens.OrthographicSize -= 1;
+            TDCam.Lens.OrthographicSize -= 1;
         }
     }
     
@@ -45,7 +49,7 @@ public class CameraController : MonoBehaviour
     {
         // Set all priorities to a low value first
         FPCam.Priority = 0;
-        ISOCam.Priority = 0;
+        TDCam.Priority = 0;
         TPCam.Priority = 0;
 
         // Boost the chosen one
@@ -53,7 +57,7 @@ public class CameraController : MonoBehaviour
 
         // Enable the selected player and disable the others
         PlayerFP.SetActive(activePlayer == PlayerFP);
-        PlayerISO.SetActive(activePlayer == PlayerISO);
+        PlayerTD.SetActive(activePlayer == PlayerTD);
         PlayerTP.SetActive(activePlayer == PlayerTP);
     }
 }

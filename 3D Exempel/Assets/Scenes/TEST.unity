@@ -369,7 +369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558699721}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.34842482, z: 0, w: 0.93733674}
   m_LocalPosition: {x: -14.072907, y: 14.5, z: -10.25792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -612,16 +612,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player First Person - With gun
-      objectReference: {fileID: 0}
-    - target: {fileID: 3799695381798577426, guid: f89f2c781af92c844a5fe203fe677396,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5305348546643367973, guid: f89f2c781af92c844a5fe203fe677396,
-        type: 3}
-      propertyPath: jumpForce
-      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 6262872131382683773, guid: f89f2c781af92c844a5fe203fe677396,
         type: 3}

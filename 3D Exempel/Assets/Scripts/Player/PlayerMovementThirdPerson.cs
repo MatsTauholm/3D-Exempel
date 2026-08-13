@@ -43,7 +43,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        capsule = GetComponent<CapsuleCollider>();
+        capsule = GetComponentInChildren<CapsuleCollider>();
     }
 
     private void Start()
@@ -69,7 +69,6 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     private void Update()
     {
         GroundCheck();
-        
         ApplyDrag();
         SpeedControl();
         SetMaterial();

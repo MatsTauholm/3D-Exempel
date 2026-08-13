@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 341985580698175360}
   - component: {fileID: 2342515673720689903}
   - component: {fileID: 7490913390036318067}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Slope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,6 +324,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &2342515673720689903
 MeshFilter:

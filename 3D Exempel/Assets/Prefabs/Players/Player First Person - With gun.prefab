@@ -13,20 +13,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player First Person - With gun
       objectReference: {fileID: 0}
+    - target: {fileID: 558010075730353119, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -15.355604
       objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 12.49
       objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -11.744883
       objectReference: {fileID: 0}
     - target: {fileID: 7345222425278600880, guid: a44d4e612de8fac40906d428a863aa11,
         type: 3}
@@ -73,6 +78,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_DefaultControlScheme
       value: Keyboard&Mouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 8837517675130578664, guid: a44d4e612de8fac40906d428a863aa11,
+        type: 3}
+      propertyPath: jumpForce
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
