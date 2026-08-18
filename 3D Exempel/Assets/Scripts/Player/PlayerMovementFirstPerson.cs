@@ -12,7 +12,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float groundDrag = 5f;
     [SerializeField] private float gravityScale = 3f;
-    private bool isSprinting;
     private float moveForce;
 
     [Header("Jump Settings")]
@@ -38,18 +37,7 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 moveDirection;
     private CapsuleCollider capsule;
-    
-    #region State machine variables (not in use)
-    //public MovementState state;
-    //public enum MovementState
-    //{
-    //    walking,
-    //    sprinting,
-    //    crouching,
-    //    air
-    //}
-    #endregion
-
+ 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -80,7 +68,6 @@ public class PlayerMovementFirstPerson : MonoBehaviour
     {
         GroundCheck();
         ApplyDrag();
-        //StateHandler(); //WiP
         SpeedControl();
         SetMaterial();
     }
@@ -97,39 +84,9 @@ public class PlayerMovementFirstPerson : MonoBehaviour
         }
     }
 
-    //private void StateHandler() // Handle the player's movement state and set the move force accordingly
-    //{
-    //    // Mode - Crouching
-    //    if (isCrouching)
-    //    {
-    //        state = MovementState.crouching;
-    //        moveForce = crouchSpeed;
-    //    }
-
-    //    // Mode - Sprinting
-    //    else if (isGrounded && isSprinting)
-    //    {
-    //        state = MovementState.sprinting;
-    //        moveForce = sprintSpeed;
-    //    }
-
-    //    // Mode - Walking
-    //    else if (isGrounded)
-    //    {
-    //        state = MovementState.walking;
-    //        moveForce = moveSpeed;
-    //    }
-
-    //    // Mode - Air
-    //    else
-    //    {
-    //        state = MovementState.air;
-    //    }
-    //}
-
-    void GroundCheck() // Check if the player is grounded by checking a sphere below the player
+    private void GroundCheck() // Check if the player is grounded by checking a sphere below the player
     {
-        Vector3 checkPosition = capsule.bounds.center + Vector3.down * capsule.bounds.extents.y;
+        Vector3 checkPosition = capsule.bounds.center + Vector3.down * capsule.bounds.extents.y; // Calculate the position to check for ground contact by moving down from the center of the capsule collider by its vertical extent
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
     }
 

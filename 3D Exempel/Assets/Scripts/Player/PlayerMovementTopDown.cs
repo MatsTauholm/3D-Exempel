@@ -11,7 +11,6 @@ public class PlayerMovementTopDown : MonoBehaviour
     [SerializeField] private float moveSpeed = 20f;
     [SerializeField] private float groundDrag = 10f;
     [SerializeField] private float gravityScale = 3f;
-    private bool isSprinting;
     private float moveForce;
 
     [Header("Jump Settings")]
@@ -70,7 +69,7 @@ public class PlayerMovementTopDown : MonoBehaviour
         ApplyDrag();
         SpeedControl();
         SetMaterial();
-        Look();
+        RotateTowardMouse();
     }
 
     private void SetMaterial() // Set the physics material based on whether the player is on a slope or not to prevent sliding and getting stuck on walls
@@ -139,6 +138,19 @@ public class PlayerMovementTopDown : MonoBehaviour
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized; // Project the movement direction onto the slope plane defined by the slope normal and normalize it to maintain consistent movement speed
     }
 
+    void RotateTowardMouse() // Rotate the player to look at the mouse position in the world, ignoring the y-axis to prevent looking up/down
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Vector3 lookAtPoint = hit.point;
+            lookAtPoint.y = transform.position.y; // Keep the same y position as the player
+            transform.LookAt(lookAtPoint);
+
+        }
+    }
+
     void FixedUpdate()
     {
         Move();
@@ -188,18 +200,7 @@ public class PlayerMovementTopDown : MonoBehaviour
         }
     }
 
-    void Look() // Rotate the player to look at the mouse position in the world, ignoring the y-axis to prevent looking up/down
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            Vector3 lookAtPoint = hit.point;
-            lookAtPoint.y = gameObject.transform.position.y; // Keep the same y position as the player
-            gameObject.transform.LookAt(lookAtPoint);
-
-        }
-    }
 
     void Jump()
     {

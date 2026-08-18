@@ -12,7 +12,6 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     [SerializeField] private float rotationSmoothTime = 0.1f;
     [SerializeField] private float groundDrag = 5f;
     [SerializeField] private float gravityScale = 3f;
-    private bool isSprinting;
     private float moveForce;
 
     [Header("Jump Settings")]
@@ -72,6 +71,7 @@ public class PlayerMovementThirdPerson : MonoBehaviour
         ApplyDrag();
         SpeedControl();
         SetMaterial();
+        
     }
 
     void GroundCheck() // Check if the player is grounded by checking a sphere below the player
