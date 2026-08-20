@@ -84,7 +84,7 @@ public class PlayerMovementTopDown : MonoBehaviour
         }
     }
 
-    void GroundCheck() // Check if the player is grounded by checking a sphere below the player
+    private void GroundCheck() // Check if the player is grounded by checking a sphere below the player
     {
         Vector3 checkPosition = capsule.bounds.center + Vector3.down * capsule.bounds.extents.y;
         isGrounded = Physics.CheckSphere(checkPosition, sphereRadius, groundLayer);
@@ -138,7 +138,7 @@ public class PlayerMovementTopDown : MonoBehaviour
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized; // Project the movement direction onto the slope plane defined by the slope normal and normalize it to maintain consistent movement speed
     }
 
-    void RotateTowardMouse() // Rotate the player to look at the mouse position in the world, ignoring the y-axis to prevent looking up/down
+    private void RotateTowardMouse() // Rotate the player to look at the mouse position in the world, ignoring the y-axis to prevent looking up/down
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
@@ -164,7 +164,7 @@ public class PlayerMovementTopDown : MonoBehaviour
         rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
     }
 
-    void Move()
+    private void Move()
     {
         // Get the camera's forward and right vectors
         Vector3 camForward = Camera.main.transform.forward;
@@ -200,9 +200,7 @@ public class PlayerMovementTopDown : MonoBehaviour
         }
     }
 
-
-
-    void Jump()
+    private void Jump()
     {
         if (isGrounded && shouldJump)
         {

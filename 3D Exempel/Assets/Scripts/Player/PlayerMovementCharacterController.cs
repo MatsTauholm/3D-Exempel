@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerMovementCharacterController : MonoBehaviour
@@ -12,10 +13,11 @@ public class PlayerMovementCharacterController : MonoBehaviour
     private CharacterController controller;
     private PlayerControls controls;
     private Vector2 moveInput;
+    private Vector3 inputDir;
+    private Vector3 velocity; 
     private float turnSmoothVelocity;
-    private bool jumpPressed;
-    private Vector3 velocity; // vertical velocity
-
+    private bool shouldJump;
+    
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -28,19 +30,20 @@ public class PlayerMovementCharacterController : MonoBehaviour
 
     void OnJump()
     {
-        jumpPressed = true; 
+        shouldJump = true; 
     }
 
     private void Update()
     {
         Move();
         JumpAndGravity();
+        RotateTowardMouse();
     }
 
     private void Move()
     {
         // Convert 2D input into a 3D direction
-        Vector3 inputDir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+        inputDir = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
         // If there's no input, don't move
         if (inputDir.sqrMagnitude < 0.01f)
@@ -66,15 +69,14 @@ public class PlayerMovementCharacterController : MonoBehaviour
 
         if (isGrounded && velocity.y < 0f)
         {
-            // Reset downward velocity when grounded
             velocity.y = -2f; // small negative to keep grounded
         }
 
         // Jump
-        if (jumpPressed && isGrounded)
+        if (shouldJump && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpSpeed * -2f * gravity);
-            jumpPressed = false;
+            shouldJump = false;
         }
 
         // Apply gravity
@@ -82,5 +84,16 @@ public class PlayerMovementCharacterController : MonoBehaviour
 
         // Move vertically
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    void RotateTowardMouse() // Smoothly rotate to face move direction if moving
+    {
+        if (inputDir.sqrMagnitude > 0.01f)
+        {
+            float targetAngle = Mathf.Atan2(inputDir.x, inputDir.z) * Mathf.Rad2Deg;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
+                                                      ref turnSmoothVelocity, rotationSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+        }
     }
 }

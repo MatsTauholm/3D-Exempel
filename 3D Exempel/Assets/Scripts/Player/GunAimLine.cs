@@ -16,8 +16,11 @@ public class GunAimLine : MonoBehaviour
     {
         Vector3 aimPoint = GetMouseAimPoint();
 
-        Vector3 direction = aimPoint - muzzle.position;
-        direction = direction.normalized;
+        Vector3 direction = aimPoint - muzzle.position; //Get the direction from the muzzle to the aim point
+
+        // Ignore vertical difference
+        direction.y = 0f;
+        direction.Normalize();
 
         // Start with the maximum possible distance
         Vector3 endPoint = muzzle.position + direction * maxAimDistance;
@@ -30,7 +33,7 @@ public class GunAimLine : MonoBehaviour
             maxAimDistance,
             obstacleLayer))
         {
-            endPoint = hit.point;
+            endPoint = hit.point; // If we hit something, set the end point to the hit point
         }
 
         lineRenderer.SetPosition(0, muzzle.position);

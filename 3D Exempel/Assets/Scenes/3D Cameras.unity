@@ -1542,8 +1542,8 @@ MonoBehaviour:
     m_Bits: 0
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 8
-  maxAimDistance: 25
+    m_Bits: 9
+  maxAimDistance: 30
 --- !u!120 &1965622424
 LineRenderer:
   serializedVersion: 3
@@ -1948,7 +1948,7 @@ PrefabInstance:
     - target: {fileID: 8498317582523621885, guid: 710cb4ab3fb706d4890922171e68e3ea,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8894946457897487361, guid: 710cb4ab3fb706d4890922171e68e3ea,
         type: 3}
@@ -2195,7 +2195,7 @@ PrefabInstance:
     - target: {fileID: 3679395509074209741, guid: 7094a872de590524d820893306875ac2,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: 7094a872de590524d820893306875ac2,
         type: 3}

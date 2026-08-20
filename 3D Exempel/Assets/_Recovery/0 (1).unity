@@ -224,17 +224,7 @@ PrefabInstance:
     - target: {fileID: 3679395509074209741, guid: d8ea7a5a0f90c2941b59c2441e973e1a,
         type: 3}
       propertyPath: m_Name
-      value: Player - Third Person - Character Controller
-      objectReference: {fileID: 0}
-    - target: {fileID: 3679395509074209741, guid: d8ea7a5a0f90c2941b59c2441e973e1a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3679395509074209741, guid: d8ea7a5a0f90c2941b59c2441e973e1a,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
+      value: Player - Third Person - RB 1
       objectReference: {fileID: 0}
     - target: {fileID: 4243038864335975736, guid: d8ea7a5a0f90c2941b59c2441e973e1a,
         type: 3}
@@ -1968,5 +1958,5 @@ SceneRoots:
   - {fileID: 1545541745}
   - {fileID: 1675307573}
   - {fileID: 1067595445}
-  - {fileID: 124969752}
   - {fileID: 835383195}
+  - {fileID: 124969752}
