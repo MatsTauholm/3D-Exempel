@@ -158,10 +158,9 @@ public class PlayerMovementTopDown : MonoBehaviour
         Jump();
     }
 
-    private void SetGravity() // Apply custom gravity to allow for better control on slopes and in the air
+    private void SetGravity() // Apply custom gravity to allow for better control
     {
         rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
-        rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
     }
 
     private void Move()

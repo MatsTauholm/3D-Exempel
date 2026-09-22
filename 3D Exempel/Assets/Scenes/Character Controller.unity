@@ -187,16 +187,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slope
       objectReference: {fileID: 0}
-    - target: {fileID: 2787998798622269306, guid: 54729fdd82eb1274a93a8be260c2f87e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 6686866277083980511, guid: 54729fdd82eb1274a93a8be260c2f87e,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1393879922}
+    - target: {fileID: 6686866277083980511, guid: 54729fdd82eb1274a93a8be260c2f87e,
+        type: 3}
+      propertyPath: m_VersionIndex
+      value: 8140
+      objectReference: {fileID: 0}
     - target: {fileID: 7490913390036318067, guid: 54729fdd82eb1274a93a8be260c2f87e,
         type: 3}
       propertyPath: m_Mesh
@@ -346,7 +346,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203844586}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 13
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
@@ -398,7 +398,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShadowRadius: 0
+  m_ShapeRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -1278,6 +1278,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6397309367929942168, guid: 5b3846772f27f62479bf760dc5c856e4,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1690957193e18a441b27ada81f596246, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1918,6 +1923,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6397309367929942168, guid: 5b3846772f27f62479bf760dc5c856e4,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1690957193e18a441b27ada81f596246, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

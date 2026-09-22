@@ -151,7 +151,6 @@ public class PlayerMovementThirdPerson : MonoBehaviour
     private void SetGravity() // Apply custom gravity to allow for better control on slopes and in the air
     {
         rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
-        rb.useGravity = !OnSlope(); // Disable gravity when on slope to prevent sliding down
     }
 
     void Move()
